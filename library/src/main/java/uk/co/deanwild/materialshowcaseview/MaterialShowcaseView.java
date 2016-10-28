@@ -56,6 +56,7 @@ public class MaterialShowcaseView extends FrameLayout implements View.OnTouchLis
     private View mContentBox;
     private TextView mTitleTextView;
     private TextView mContentTextView;
+    private LinearLayout mCustomContentContainer;
     private TextView mDismissButton;
     private int mGravity;
     private int mContentBottomMargin;
@@ -81,6 +82,11 @@ public class MaterialShowcaseView extends FrameLayout implements View.OnTouchLis
     public MaterialShowcaseView(Context context) {
         super(context);
         init(context);
+    }
+
+    public MaterialShowCaseView(Context context, int layoutId) {
+        super(context);
+        init(context, layoutId);
     }
 
     public MaterialShowcaseView(Context context, AttributeSet attrs) {
@@ -123,6 +129,37 @@ public class MaterialShowcaseView extends FrameLayout implements View.OnTouchLis
         mContentBox = contentView.findViewById(R.id.content_box);
         mTitleTextView = (TextView) contentView.findViewById(R.id.tv_title);
         mContentTextView = (TextView) contentView.findViewById(R.id.tv_content);
+        mDismissButton = (TextView) contentView.findViewById(R.id.tv_dismiss);
+        mDismissButton.setOnClickListener(this);
+    }
+
+    public void init(Context context, int layoutId) {
+        setWillNotDraw(false);
+
+        // create our animation factory
+        mAnimationFactory = new AnimationFactory();
+
+        mListeners = new ArrayList<>();
+
+        // make sure we add a global layout listener so we can adapt to changes
+        mLayoutListener = new UpdateOnGlobalLayout();
+        getViewTreeObserver().addOnGlobalLayoutListener(mLayoutListener);
+
+        // consume touch events
+        setOnTouchListener(this);
+
+        mMaskColour = Color.parseColor(ShowcaseConfig.DEFAULT_MASK_COLOUR);
+        setVisibility(INVISIBLE);
+
+
+        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.showcase_custom_content, this, true);
+        mContentBox = contentView.findViewById(R.id.content_box);
+        mTitleTextView = (TextView) contentView.findViewById(R.id.tv_title);
+        mCustomContentContainer = (LinearLayout) contentView.findViewById(R.id.custom_content);
+
+        View customLayout = LayoutInflater.from(getContext()).inflate(layoutId, this, true);
+        mCustomContent.addView(customLayout);
+
         mDismissButton = (TextView) contentView.findViewById(R.id.tv_dismiss);
         mDismissButton.setOnClickListener(this);
     }
