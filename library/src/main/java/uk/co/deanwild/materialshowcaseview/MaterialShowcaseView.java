@@ -550,6 +550,12 @@ public class MaterialShowcaseView extends FrameLayout implements View.OnTouchLis
             showcaseView = new MaterialShowcaseView(activity);
         }
 
+        public Builder(Activity activity, int layoutId) {
+            this.activity = activity;
+
+            showcaseView = new MaterialShowcaseView(activity, layoutId);
+        }
+
         /**
          * Set the title text shown on the ShowcaseView.
          */
