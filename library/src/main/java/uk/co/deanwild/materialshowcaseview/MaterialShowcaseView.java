@@ -84,7 +84,7 @@ public class MaterialShowcaseView extends FrameLayout implements View.OnTouchLis
         init(context);
     }
 
-    public MaterialShowCaseView(Context context, int layoutId) {
+    public MaterialShowcaseView(Context context, int layoutId) {
         super(context);
         init(context, layoutId);
     }
