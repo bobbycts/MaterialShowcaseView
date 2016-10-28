@@ -158,7 +158,7 @@ public class MaterialShowcaseView extends FrameLayout implements View.OnTouchLis
         mTitleTextView = (TextView) contentView.findViewById(R.id.tv_title);
         mCustomContentContainer = (LinearLayout) contentView.findViewById(R.id.custom_content);
 
-        View customLayout = LayoutInflater.from(getContext()).inflate(layoutId, this, true);
+        View customLayout = LayoutInflater.from(getContext()).inflate(layoutId, null);
         mCustomContentContainer.addView(customLayout);
 
         mDismissButton = (TextView) contentView.findViewById(R.id.tv_dismiss);
